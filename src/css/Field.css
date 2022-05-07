@@ -1,0 +1,74 @@
+.field-container{
+  margin: 2em;
+}
+
+.field{
+  display: grid;
+  grid-gap: 0px;
+  grid-template-columns: repeat(11, 1fr);
+  grid-template-rows: repeat(11, 1fr);
+  height: 300px;
+  width: 300px;
+}
+
+.field-cell{
+  border: 1px solid rgb(125, 125, 125);
+}
+
+.position{
+  margin: 1em;
+}
+
+.btn-rotate{
+  margin-top: 1em;
+  font-size: 16px;
+}
+
+.label{
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  border: none;
+}
+
+.player-title{
+  font-size: 48px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+.placement-text{
+  margin-top: 1em;
+}
+
+.player-status{
+  text-align: center;
+}
+
+.active{
+  background-color: rgb(185, 185, 185);
+}
+
+.occupied{
+  background-color: rgb(97, 97, 97);
+}
+
+.active-occupied{
+  background-color: rgb(255, 225, 225);
+}
+
+.enemy-hit{
+  background-color: red;
+}
+
+.enemy-sunk{
+  background-color: #6d6d6d;
+}
+
+.enemy-miss{
+  background-color: rgb(168, 168, 168);
+}
+
+.sunk{
+  background-color: red;
+}
