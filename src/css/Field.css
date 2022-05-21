@@ -45,6 +45,12 @@
   text-align: center;
 }
 
+.wrongturn{
+  text-align: center;
+  font-size: 20px;
+  color:crimson;
+}
+
 .active{
   background-color: rgb(185, 185, 185);
 }

@@ -18,11 +18,11 @@ const getOpponentShipIdx = (opponent, row, col) => {
 const isSunk = (ship,row,col) => {
     let sunk = true;
     if(!ship) return false;
-    ship.positions.forEach(position => {
-      if(!(position.hit)){
+    for(let i = 0; i < ship.positions.length; i++){
+      if(!ship.positions[i].hit){
         sunk = false;
       }
-    });
+    }
     return sunk;
   }
 
@@ -36,40 +36,25 @@ const placeMove = ({field,row,col,rotated,player,opponent}) => {
   if(opponent.shipsField[row][col].status === "occupied"){
     opponent.shipsField[row][col].status = "hit";
     field[row][col].status = "hit";
-    opponentShip.positions.forEach(position =>{
-      if(position.row === row && position.col === col){
-        position.hit = true;
+    for(let i = 0; i < opponentShip.positions.length; i++){
+      if(opponentShip.positions[i].row === row && opponentShip.positions[i].col === col){
+        opponentShip.positions[i].hit = true;
       }
-    })
+    }
     if(isSunk(opponentShip, row, col)){
       opponent.sunkenShips++; 
       opponentShip.positions.forEach(position => {
         const { row, col } = position;
         opponent.shipsField[row][col].status = "sunk";
         field[row][col].status = "sunk";
-        if(row<10 && field[row+1][col].status != "sunk"){
-          field[row+1][col].status = "miss";
-        };
-        if(row>1 && field[row-1][col].status != "sunk"){
-          field[row-1][col].status = "miss";
-        };
-        if(col<10 && field[row][col+1].status != "sunk"){
-          field[row][col+1].status = "miss";
-        };
-        if(col>2 && field[row][col-1].status != "sunk"){
-          field[row][col-1].status = "miss";
-        };
-        if(row<10 && col<10){
-          field[row+1][col+1].status = "miss";
-        };
-        if(row<10 && col>1){
-          field[row+1][col-1].status = "miss";
-        };
-        if(row>1 && col<10){
-          field[row-1][col+1].status = "miss";
-        };
-        if(row>1 && col>1){
-          field[row-1][col-1].status = "miss";
+        for(let i = row-1; i <= row + 1; i++){
+          for(let j = col-1; j <= col + 1; j++){
+            if(i <= 10 && i >= 1 && j <= 10 && j >= 1){
+              if(field[i][j].status !== "sunk"){
+                field[i][j].status = "miss";
+              }
+            }
+          }
         };
       }); 
     }

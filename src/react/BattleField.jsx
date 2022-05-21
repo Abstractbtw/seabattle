@@ -3,33 +3,17 @@ import {updateHover,placeMove} from "../js/battleField";
 import BattleFieldCell from "./BattleFieldCell";
 import "../css/Field.css";
 
-const letters = {
-  0: null,
-  1: "A",
-  2: "B",
-  3: "C",
-  4: "D",
-  5: "E",
-  6: "F",
-  7: "G",
-  8: "H",
-  9: "I",
-  10: "J"
-};
-
 export default class BattleField extends Component{
   constructor(props){
     super(props);
 
     this.state = {
       rotated:false,
-      activeSpot:null
     };
 
     this.handleRotate = this.handleRotate.bind(this);
     this.handleHover = this.handleHover.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.handleExit = this.handleExit.bind(this);
   }
 
   handleHover(row,col,type) {
@@ -44,24 +28,22 @@ export default class BattleField extends Component{
     };
     const updatedField = updateHover(data);
     this.props.updateFields(this.props.player,updatedField,"movesField");
-    this.setState({
-      activeSpot: `${letters[col]}${row}`
-    });
-  }
-
-  handleExit(){
-    this.setState({
-      activeSpot:null
-    });
   }
 
   handleClick(row,col){
     const{field,opponent,player,activePlayer} = this.props;
+    const{wrongturn} = this.state;
+    this.setState({
+      wrongturn:null
+    })
     if(!activePlayer){
       return;
     }
     if(player !== activePlayer){
-      return alert("It's not your turn!");
+      this.setState({
+        wrongturn:player
+      })
+      return;
     }
     const{rotated} = this.state;
     const data = {
@@ -110,6 +92,18 @@ export default class BattleField extends Component{
     });
   }
 
+  wrongTurn(){
+    const{player,activePlayer} = this.props;
+    const{wrongturn} = this.state;
+    if(wrongturn && player !== activePlayer){
+      return(<p className="wrongturn">It's not your turn</p>);
+    }
+    else{
+      return(<p></p>);
+    }
+  }
+
+
   playerTurn(){
     const{player,activePlayer,setShips} = this.props;
     if(player === activePlayer){
@@ -128,10 +122,11 @@ export default class BattleField extends Component{
     return(
       <div className="field-container">
         <p className="player-title">{player}</p>
-        <div className="field" onMouseLeave = {this.handleExit}>
+        <div className="field">
           {this.renderCells()}
         </div>
         {this.playerTurn()}
+        {this.wrongTurn()}
       </div>
     );
   }

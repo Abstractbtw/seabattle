@@ -1,5 +1,5 @@
 import React from "react";
-import { classUpdate} from "../js/battleField";
+import {classUpdate} from "../js/battleField";
 
 const BattleFieldCell = ({cell,i,j,handleHover,handleClick,setShips}) => {
   if(cell.status === "label"){

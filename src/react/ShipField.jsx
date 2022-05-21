@@ -9,7 +9,6 @@ export default class ShipField extends Component{
 
     this.state = {
       rotated:false,
-      activeSpot:null
     };
 
     this.handleRotate = this.handleRotate.bind(this);

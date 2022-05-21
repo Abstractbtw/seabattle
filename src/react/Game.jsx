@@ -1,7 +1,8 @@
 import React, {Component} from "react";
 import BattleField from "./BattleField";
 import ShipField from "./ShipField";
-import {createPlayer,welcomeMessage} from "../js/Game";
+import FieldReducer from "./FieldReducer";
+import {createPlayer} from "../js/Game";
 import "../css/Game.css";
 
 
@@ -86,7 +87,7 @@ export default class Game extends Component{
       opponent
     }
     this.fieldReducer("UPDATE",payload); 
-    if(opponent && opponent.sunkenShips === 1){
+    if(opponent && opponent.sunkenShips === 10){
       this.fieldReducer("GAME_OVER",payload); 
     }else if(opponent){
       this.fieldReducer("HIT",payload); 
@@ -178,4 +179,5 @@ export default class Game extends Component{
       </div>
     );
   }
+
 }
