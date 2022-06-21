@@ -23,3 +23,7 @@
   display: flex;
   justify-content: space-between;
 }
+
+.nextTurn{
+  text-align: center;
+}

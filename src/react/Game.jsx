@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import BattleField from "./BattleField";
 import ShipField from "./ShipField";
-import FieldReducer from "./FieldReducer";
+import {renderGame} from "../index";
 import {createPlayer} from "../js/Game";
 import "../css/Game.css";
 
@@ -17,6 +17,7 @@ export default class Game extends Component{
       gameStarting:false,
       winner:null,
       gameOver:false,
+      ready:true,
     };
     this.updateFields=this.updateFields.bind(this);
     this.updateShips=this.updateShips.bind(this);
@@ -28,6 +29,7 @@ export default class Game extends Component{
       updatedShips, 
       player
     }
+    const{ready} = this.state;
     if(currentShip + 1 === ships.length && player === "player2"){
       this.shipReducer("SET_PLAYER_TWO",payload); 
       this.shipReducer("START_GAME",payload);
@@ -45,9 +47,9 @@ export default class Game extends Component{
         player1: {
           ...this.state.player1,
           ships:updatedShips,
-          setShips:true
+          setShips:true,
         },
-        activePlayer:"player2"
+        ready: false
       });
     }
     if(action === "SET_PLAYER_TWO"){
@@ -57,14 +59,11 @@ export default class Game extends Component{
           ships:updatedShips,
           setShips:true
         },
-        allsetShips:true,
-        gameStarting:true
       });
     }
     if(action === "START_GAME"){
       this.setState({
-        activePlayer:"player1",
-        gameStarting:false
+        ready: false
       });
     }
     if(action === "SET_SHIP") {
@@ -161,9 +160,37 @@ export default class Game extends Component{
     }
   }
 
+  changeReady = () => {
+    const{activePlayer}=this.state;
+    if(activePlayer === "player1"){
+      this.setState({ 
+        ready: true,
+        activePlayer:"player2"
+      })
+    }
+    else{
+      this.setState({
+        allsetShips:true,
+        gameStarting:true,
+        activePlayer:"player1",
+        ready:true
+      })
+    }
+  }
+
+  ShowNextTurn(){
+    const{ready} = this.state;
+    if(!ready){
+      return(<button onClick={this.changeReady}>Next</button>)
+    }
+  }
+
   render(){
     return(
       <div className="game">
+        <form onSubmit={renderGame}>
+          <button>Restart</button>
+        </form>
         <div className="title-container">
           <p className="title">Sea Battle</p>
         </div>
@@ -176,6 +203,7 @@ export default class Game extends Component{
           {this.renderShipField("player1")}
           {this.renderShipField("player2")}
         </div>
+        <div className="nextTurn">{this.ShowNextTurn()}</div>
       </div>
     );
   }

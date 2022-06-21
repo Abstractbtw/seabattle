@@ -5,4 +5,20 @@ import Game from './react/Game';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-ReactDOM.render(<Game />, document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
+
+const renderGame = () => {
+  root.render(
+    <React.StrictMode>
+      <Game />
+    </React.StrictMode>
+  );
+}
+
+root.render(
+    <React.StrictMode>
+      <Game />
+    </React.StrictMode>
+);
+
+export {renderGame}

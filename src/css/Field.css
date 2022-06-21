@@ -52,14 +52,22 @@
 }
 
 .active{
-  background-color: rgb(185, 185, 185);
+  background-color: rgb(168, 168, 168);
 }
 
 .occupied{
   background-color: rgb(97, 97, 97);
 }
 
+.occupied-space{
+  background-color: rgba(214, 214, 214, 0.986);
+}
+
 .active-occupied{
+  background-color: rgb(255, 225, 225);
+}
+
+.active-occupied-space{
   background-color: rgb(255, 225, 225);
 }
 
